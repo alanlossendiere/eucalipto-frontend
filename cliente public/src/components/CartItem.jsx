@@ -2,13 +2,11 @@ import React from "react";
 import { useCartUiStore } from "../hooks/useCartUiStore";
 
 export const CartItem = (product) => {
+  console.log(product.stock);
+
   const { startDeletingProduct } = useCartUiStore();
 
-  const { name, sizes, type, price } = product;
-
-  const id = product._id;
-
-  const image = product.image.secure_url;
+  const { name, sizes, type, price, id, imgSrc, quantity, stock } = product;
 
   const handleExitProductCart = () => {
     startDeletingProduct(id);
@@ -23,13 +21,15 @@ export const CartItem = (product) => {
       >
         <span>X</span>
       </button>
-      <img src={image} alt={name} className="cartImg" />
+      <img src={imgSrc} alt={name} className="cartImg" />
       <div className="cartDetails">
         <p className="cartTitle">{name}</p>
         <p className="cartDescription">
           Talle: {sizes} | {type}
         </p>
-        <p className="cartQuantity">dsa</p>
+        <p className="cartQuantity">
+          Cantidad: {quantity} | {stock}
+        </p>
       </div>
       <div className="cartProductPrice">
         <p cartPrice>$ {price}</p>

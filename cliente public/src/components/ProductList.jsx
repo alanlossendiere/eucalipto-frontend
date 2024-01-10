@@ -1,12 +1,24 @@
 import React from "react";
 import { useCartUiStore } from "../hooks/useCartUiStore";
-import { useProductStore } from "../hooks/useProductsStore";
 
 export const ProductList = (data) => {
   const { startAddingProduct } = useCartUiStore();
 
   const onAddCart = async () => {
-    await startAddingProduct(data);
+    const newData = {
+      id: data._id,
+      sizes: data.sizes,
+      name: data.name,
+      price: data.price,
+      quantity: 1,
+      total: data.price,
+      type: data.type,
+      imgSrc: data.image.secure_url,
+      stock: data.stock,
+      sku: data.sku
+    };
+
+    await startAddingProduct(newData);
   };
 
   return (
