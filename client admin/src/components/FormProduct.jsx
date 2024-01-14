@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useProductsStore } from "../hooks/useProductsStore";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { adminApi } from "../api/adminApi";
 
 export const FormProduct = () => {
-
   const navigate = useNavigate();
 
   const { activeProduct, startSavingProduct } = useProductsStore();
@@ -13,18 +13,64 @@ export const FormProduct = () => {
     defaultValues: { ...activeProduct },
   });
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrls, setImageUrls] = useState([]);
+
 
   const handleImageChange = async (event) => {
     event.preventDefault();
 
-    const file = await event.target.files[0];
+    const files = await event.target.files;
 
-    setSelectedImage(file);
+    const uploadPromises = Array.from(files).map(async (file) => {
+      const fileName = `${file.name}_`;
 
+      const formData = new FormData();
+
+      formData.append("image", file, fileName);
+
+      console.log(file);
+
+      try {
+        const { data } = await adminApi.post("products/images", formData);
+
+        return {
+          public_id: data.public_id,
+          secure_url: data.secure_url,
+        };
+      } catch (error) {
+        console.log("Error al subir la imagen", error);
+      }
+    });
+
+    const imageUrls = await Promise.all(uploadPromises);
+
+    setImageUrls(imageUrls);
+
+    setValue(
+      "image",
+      [...imageUrls],
+      imageUrls.filter((url) => url !== null)
+    );
   };
 
+  const propertiesToSet = [
+    "name",
+    "_id",
+    "description",
+    "type",
+    "price",
+    "sku",
+    "outstanding",
+    "sold",
+    "active",
+    "createdAt",
+    "stock",
+    "image",
+  ];
+
   const onSubmit = async (data) => {
+    console.log(data);
+
     await startSavingProduct(data);
 
     navigate("/");
@@ -32,25 +78,20 @@ export const FormProduct = () => {
 
   useEffect(() => {
     if (activeProduct) {
-      setValue("name", activeProduct.name);
-      setValue("description", activeProduct.description);
-      setValue("type", activeProduct.type);
-      setValue("price", activeProduct.price);
-      setValue("sku", activeProduct.sku);
-      setValue("outstanding", activeProduct.outstanding);
-      setValue("sold", activeProduct.sold);
-      setValue("active", activeProduct.active);
-      setValue("sizes", activeProduct.sizes);
+      propertiesToSet.forEach((property) => {
+        setValue(property, activeProduct[property]);
+      });
+    }
+    if (activeProduct.image) {
+      const secureUrls = activeProduct.image.map((image) => image);
+      setImageUrls(secureUrls);
+      setValue("image", secureUrls);
     }
   }, [activeProduct, setValue]);
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit) }
-        className="row"
-        encType="multipart/form-data"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="row">
         <div className="col-6">
           <div className="form-floating mb-3">
             <input
@@ -75,6 +116,15 @@ export const FormProduct = () => {
               {...register("type", { required: true, minLength: 3 })}
             />
             <label htmlFor="floatingType">Tipo:</label>
+          </div>
+          <div className="form-floating mb-3">
+            <input
+              className="form-control"
+              type="number"
+              id="floatingStock"
+              {...register("stock", { required: true })}
+            />
+            <label htmlFor="floatingStock">Stock:</label>
           </div>
           <div className="form-floating mb-3">
             <input
@@ -136,7 +186,7 @@ export const FormProduct = () => {
               value="S"
               className="form-check-input"
               id="sizeS"
-              {...register("sizes", {value: false})}
+              {...register("sizes", { value: false })}
             />
             <label className="form-check-label" htmlFor="sizeS">
               S
@@ -148,7 +198,7 @@ export const FormProduct = () => {
               value="M"
               className="form-check-input"
               id="sizeM"
-              {...register("sizes", {value: false})}
+              {...register("sizes", { value: false })}
             />
             <label className="form-check-label" htmlFor="sizeM">
               M
@@ -160,7 +210,7 @@ export const FormProduct = () => {
               value="L"
               className="form-check-input"
               id="sizeL"
-              {...register("sizes", {value: false})}
+              {...register("sizes", { value: false })}
             />
             <label className="form-check-label" htmlFor="sizeL">
               L
@@ -172,7 +222,7 @@ export const FormProduct = () => {
               value="XL"
               className="form-check-input"
               id="sizeXL"
-              {...register("sizes", {value: false})}
+              {...register("sizes", { value: false })}
             />
             <label className="form-check-label" htmlFor="sizeXL">
               XL
@@ -182,12 +232,15 @@ export const FormProduct = () => {
             <label className="form-label" htmlFor="uploadFiles">
               Imagenes
             </label>
+            {imageUrls.map((url, index) => (
+              <img key={index} src={url.secure_url}></img>
+            ))}
             <input
               type="file"
               className="form-control"
               id="uploadFiles"
               onChange={handleImageChange}
-              {...register("image", { required: false })}
+              multiple
             />
           </div>
           <button type="submit">Enviar</button>

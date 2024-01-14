@@ -13,9 +13,9 @@ export const ProductList = (data) => {
       quantity: 1,
       total: data.price,
       type: data.type,
-      imgSrc: data.image.secure_url,
+      imgSrc: data.image[0].secure_url,
       stock: data.stock,
-      sku: data.sku
+      sku: data.sku,
     };
 
     await startAddingProduct(newData);
@@ -24,7 +24,11 @@ export const ProductList = (data) => {
   return (
     <>
       <div className="card d-inline-block text-center">
-        <img src={data.image.secure_url} alt={data.name} className="cardImg" />
+        <img
+          src={data.image[0].secure_url}
+          alt={data.name}
+          className="cardImg"
+        />
         <div className="card-body">
           <div className="card-title">{data.name}</div>
           <div className="cardTextPrice">$ {data.price}</div>

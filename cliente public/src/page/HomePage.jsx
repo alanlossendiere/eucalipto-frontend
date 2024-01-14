@@ -29,8 +29,6 @@ export const HomePage = () => {
     }
   }, [products]);
 
-  
-
   // const filteredData = (products, selected) => {
 
   //   let filteredProducts = products;
@@ -68,11 +66,11 @@ export const HomePage = () => {
 
   return (
     <>
-      {isOpen ? <Cart /> : <CartButton/>}
+      {isOpen ? <Cart /> : <CartButton />}
       <div className="d-block">
         <div className="main">
           <div className="chooseSize">
-            <ChooseSize key={Math.random()}/>
+            <ChooseSize key={Math.random()} />
           </div>
           <div className="products-list">
             <div className="contadorProductos">

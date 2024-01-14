@@ -21,8 +21,6 @@ export const Cart = () => {
       // 1+x+Completo+%7C+%243.900
     );
 
-    
-
     window.open(
       `https://api.whatsapp.com/send/?phone=549${phoneNumber}&text=Hola%2C+quiero+comprar+los+siguiente+productos%3A${wppProductos}%0A%0A+Cantidad+de+productos%3A+%2A${totalAmount}%2A%0ATotal%3A+%2A%24${totalPrice}%2A%0A&type=phone_number&app_absent=0`
     );

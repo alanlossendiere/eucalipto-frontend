@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { adminApi } from "../api/adminApi";
 import {
-  onCleanProducts,
   onCreateProduct,
   onDeleteProduct,
   onLoadProduct,
   onLoadProducts,
-  onLoadingProducts,
   onSetActiveProduct,
   onUpdateProduct,
 } from "../store/productsSlice";
+import Swal from "sweetalert2";
 
 export const useProductsStore = () => {
   const dispatch = useDispatch();
@@ -33,16 +32,14 @@ export const useProductsStore = () => {
     }
   };
 
-  const startDeletingProduct = async (props) => {
+  const startDeletingProduct = async (_id) => {
     try {
-      const data = {
-        image1: props.image[0].public_id
-      };
-
-      await adminApi.delete(`/products/${props._id}`, { data });
+      await adminApi.delete(`/products/${_id}`);
       dispatch(onDeleteProduct());
+      Swal.fire("Eliminada", "Se elimino correctamente", "success");
     } catch (error) {
       console.log(error);
+      Swal.fire("Error", "No se pudo eliminar", "error");
     }
   };
 
@@ -57,22 +54,27 @@ export const useProductsStore = () => {
 
   const startSavingProduct = async (product) => {
     const id = product._id;
-
     try {
       if (id) {
-        const { data } = await adminApi.put(`/products/${id}`, product);
+        await adminApi.put(`/products/${id}`, product);
 
         dispatch(onUpdateProduct({ ...product }));
-
-        console.log(data);
-        console.log({ ...product });
       } else {
-        const { data } = await adminApi.post("/products", product);
+        await adminApi.post("/products", product);
 
         dispatch(onCreateProduct({ ...product }));
-
-        console.log(data);
       }
+    } catch (error) {
+      console.log(error);
+      Swal.fire("No se pudo crear", error.response.data.message, "error");
+    }
+  };
+
+  const startUploadingImg = async (img) => {
+    try {
+      const { data } = await adminApi.post("/products/images", img);
+
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -91,5 +93,6 @@ export const useProductsStore = () => {
     startLoadingProduct,
     startSavingProduct,
     startDeletingProduct,
+    startUploadingImg,
   };
 };

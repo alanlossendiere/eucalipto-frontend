@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { useProductsStore } from "../hooks/useProductsStore";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const TableProduct = (props) => {
   const { name, price, sold, _id } = props;
@@ -15,7 +15,7 @@ export const TableProduct = (props) => {
   };
 
   const handleDelete = async () => {
-    await startDeletingProduct(props);
+    await startDeletingProduct(_id);
   };
   return (
     <>
@@ -32,7 +32,11 @@ export const TableProduct = (props) => {
             <AiOutlineEdit size={25} onClick={handleEdit} />
           </Link>
           &nbsp;&nbsp;
-          <AiOutlineDelete size={25} onClick={handleDelete} />
+          <AiOutlineDelete
+            style={{ cursor: "pointer" }}
+            size={25}
+            onClick={handleDelete}
+          />
         </td>
       </tr>
     </>

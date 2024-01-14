@@ -69,8 +69,8 @@ export const productsSlice = createSlice({
       });
     },
     onCreateProduct: (state, { payload }) => {
-      state.products.push(payload)
-      state.activeProduct = {}
+      state.products.push(payload);
+      state.activeProduct = {};
     },
   },
 });
