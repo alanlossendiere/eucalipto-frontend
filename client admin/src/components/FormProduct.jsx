@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useProductsStore } from "../hooks/useProductsStore";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminApi } from "../api/adminApi";
+import { MdOutlineUpload } from "react-icons/md";
+import { ImageForm } from "./ImageForm";
 
 export const FormProduct = () => {
   const navigate = useNavigate();
+
+  const fileInputRef = useRef();
 
   const { activeProduct, startSavingProduct } = useProductsStore();
 
@@ -15,6 +19,7 @@ export const FormProduct = () => {
 
   const [imageUrls, setImageUrls] = useState([]);
 
+  const [title, setTitle] = useState("");
 
   const handleImageChange = async (event) => {
     event.preventDefault();
@@ -81,6 +86,7 @@ export const FormProduct = () => {
       propertiesToSet.forEach((property) => {
         setValue(property, activeProduct[property]);
       });
+      setTitle(activeProduct.name);
     }
     if (activeProduct.image) {
       const secureUrls = activeProduct.image.map((image) => image);
@@ -91,49 +97,58 @@ export const FormProduct = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="row">
-        <div className="col-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="productLayout">
+        <div className="product-title">
+          <p className="product-title-input">{title}</p>
+        </div>
+        <div className="basic-edit-product">
           <div className="form-floating mb-3">
             <input
+              placeholder=""
               className="form-control"
               id="floatingName"
               {...register("name", { required: true, minLength: 3 })}
+              onChange={(e) => setTitle(e.target.value)}
             />
-            <label htmlFor="floatingName">Nombre del producto:</label>
+            <label htmlFor="floatingName">Nombre</label>
           </div>
           <div className="form-floating mb-3">
             <input
+              placeholder=""
               className="form-control"
               id="floatingDescription"
               {...register("description", { required: true, minLength: 3 })}
             />
-            <label htmlFor="floatingDescription">Description:</label>
+            <label htmlFor="floatingDescription">Description</label>
           </div>
           <div className="form-floating mb-3">
             <input
+              placeholder=""
               className="form-control"
               id="floatingType"
               {...register("type", { required: true, minLength: 3 })}
             />
-            <label htmlFor="floatingType">Tipo:</label>
+            <label htmlFor="floatingType">Tipo</label>
           </div>
           <div className="form-floating mb-3">
             <input
+              placeholder=""
               className="form-control"
               type="number"
               id="floatingStock"
               {...register("stock", { required: true })}
             />
-            <label htmlFor="floatingStock">Stock:</label>
+            <label htmlFor="floatingStock">Stock</label>
           </div>
           <div className="form-floating mb-3">
             <input
+              placeholder=""
               className="form-control"
               type="number"
               id="floatingPrice"
               {...register("price", { required: true })}
             />
-            <label htmlFor="floatingPrice">Precio:</label>
+            <label htmlFor="floatingPrice">Precio</label>
           </div>
           <div className="form-floating mb-3">
             <input
@@ -145,38 +160,40 @@ export const FormProduct = () => {
             <label htmlFor="floatingSku">SKU:</label>
           </div>
         </div>
-        <div className="col-6">
-          <div className="mb-3 form-switch">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="floatingOutstanding"
-              {...register("outstanding")}
-            />
-            <label className="form-check-label" htmlFor="floatingOutstanding">
-              Destacado:
-            </label>
-          </div>
-          <div className=" mb-3 form-switch">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="floatingSold"
-              {...register("sold")}
-            />
-            <label htmlFor="floatingSold">Sold</label>
-          </div>
-          <div className="mb-3 form-switch">
-            <input
-              className="form-check-input"
-              id="floatingActive"
-              type="checkbox"
-              role="switch"
-              {...register("active")}
-            />
-            <label className="form-check-label" htmlFor="floatingActive">
-              Activo:
-            </label>
+        <div className="basic-edit-product">
+          <div className="switch-group">
+            <div className="mb-3 form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="floatingOutstanding"
+                {...register("outstanding")}
+              />
+              <label className="form-check-label" htmlFor="floatingOutstanding">
+                Destacado:
+              </label>
+            </div>
+            <div className=" mb-3 form-switch">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="floatingSold"
+                {...register("sold")}
+              />
+              <label htmlFor="floatingSold">Sold</label>
+            </div>
+            <div className="mb-3 form-switch">
+              <input
+                className="form-check-input"
+                id="floatingActive"
+                type="checkbox"
+                role="switch"
+                {...register("active")}
+              />
+              <label className="form-check-label" htmlFor="floatingActive">
+                Activo:
+              </label>
+            </div>
           </div>
 
           <label htmlFor="floatingSizes">Talles:</label>
@@ -228,19 +245,30 @@ export const FormProduct = () => {
               XL
             </label>
           </div>
-          <div className="mb-3">
+          <div className="mb-3 product-image">
             <label className="form-label" htmlFor="uploadFiles">
               Imagenes
             </label>
-            {imageUrls.map((url, index) => (
-              <img key={index} src={url.secure_url}></img>
-            ))}
+            <div className="image-input">
+              {imageUrls.map((url, index) => (
+                <ImageForm key={index} props={url}>
+                  {""}
+                </ImageForm>
+              ))}
+            </div>
             <input
               type="file"
               className="form-control"
               id="uploadFiles"
               onChange={handleImageChange}
               multiple
+              ref={fileInputRef}
+              style={{ display: "none" }}
+            />
+            <MdOutlineUpload
+              onClick={() => fileInputRef.current.click()}
+              style={{ cursor: "pointer" }}
+              size={30}
             />
           </div>
           <button type="submit">Enviar</button>
