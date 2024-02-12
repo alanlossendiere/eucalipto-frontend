@@ -82,7 +82,6 @@ export const useProductsStore = () => {
 
   const startDeletingImage = async (data) => {
     try {
-      console.log(data);
       await adminApi.delete(`/products/images`, {data});
     } catch (error) {
       console.log(error);

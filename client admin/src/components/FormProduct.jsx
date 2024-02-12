@@ -11,7 +11,8 @@ export const FormProduct = () => {
 
   const fileInputRef = useRef();
 
-  const { activeProduct, startSavingProduct } = useProductsStore();
+  const { activeProduct, startSavingProduct, startDeletingImage } =
+    useProductsStore();
 
   const { handleSubmit, register, setValue } = useForm({
     defaultValues: { ...activeProduct },
@@ -27,13 +28,9 @@ export const FormProduct = () => {
     const files = await event.target.files;
 
     const uploadPromises = Array.from(files).map(async (file) => {
-      const fileName = `${file.name}_`;
-
       const formData = new FormData();
 
-      formData.append("image", file, fileName);
-
-      console.log(file);
+      formData.append("image", file);
 
       try {
         const { data } = await adminApi.post("products/images", formData);
@@ -58,6 +55,19 @@ export const FormProduct = () => {
     );
   };
 
+  const handleExitImage = async (props) => {
+    const id = props.public_id;
+    const formData = { public_id: id };
+
+    await startDeletingImage(formData);
+
+    const imageUrlsModified = imageUrls.filter(
+      (image) => image.public_id !== id
+    );
+
+    setImageUrls(imageUrlsModified);
+  };
+  console.log(imageUrls);
   const propertiesToSet = [
     "name",
     "_id",
@@ -74,6 +84,8 @@ export const FormProduct = () => {
   ];
 
   const onSubmit = async (data) => {
+    data.image = imageUrls;
+
     console.log(data);
 
     await startSavingProduct(data);
@@ -152,12 +164,13 @@ export const FormProduct = () => {
           </div>
           <div className="form-floating mb-3">
             <input
+              placeholder=""
               className="form-control"
               type="number"
               id="floatingSku"
               {...register("sku")}
             />
-            <label htmlFor="floatingSku">SKU:</label>
+            <label htmlFor="floatingSku">SKU</label>
           </div>
         </div>
         <div className="basic-edit-product">
@@ -245,15 +258,37 @@ export const FormProduct = () => {
               XL
             </label>
           </div>
+          <div class="form-floating">
+            <select
+              class="form-select"
+              id="floatingSelect"
+              aria-label="Floating label select example"
+              {...register("sizes")}
+            >
+              <option disabled selected value={""}>
+                Open this select menu
+              </option>
+              <option value="XL">XL</option>
+              <option value="L">L</option>
+              <option value="S">S</option>
+            </select>
+            <label for="floatingSelect">Works with selects</label>
+          </div>
           <div className="mb-3 product-image">
             <label className="form-label" htmlFor="uploadFiles">
               Imagenes
             </label>
             <div className="image-input">
-              {imageUrls.map((url, index) => (
-                <ImageForm key={index} props={url}>
-                  {""}
-                </ImageForm>
+              {imageUrls.map((props) => (
+                <>
+                  <div
+                    className="exitImage"
+                    onClick={() => handleExitImage(props)}
+                  >
+                    <span>X</span>
+                  </div>
+                  <img className="card-img" src={props.secure_url}></img>
+                </>
               ))}
             </div>
             <input
