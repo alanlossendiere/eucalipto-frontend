@@ -3,20 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 export const adminSlice = createSlice({
   name: "admin",
   initialState: {
-    status: "checking",
+    authStatus: "not-authenticated",
     user: {},
     message: undefined,
   },
   reducers: {
     onChecking: (state) => {
       state.status = "checking";
-      state.user = {};
-      state.message = undefined;
     },
     onLogin: (state, { payload }) => {
-      (state.status = "authenticated"),
-        (state.user = payload),
-        (state.message = undefined);
+      (state.authStatus = "authenticated"), (state.user = payload);
     },
     onLogout: (state, { payload }) => {
       (state.status = "not-authenticated"),

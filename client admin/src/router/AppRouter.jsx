@@ -5,9 +5,13 @@ import { LoginPage } from "../pages/LoginPage";
 import { CheckingPage } from "../pages/CheckingPage";
 import { AdminProduct } from "../pages/AdminProduct";
 import { NewProduct } from "../pages/NewProduct";
+import { useUserStore } from "../hooks/useUserStore";
 
 export const AppRouter = () => {
-  const authStatus = "authenticated";
+
+  const { authStatus } = useUserStore()
+
+  console.log(authStatus);
 
   if (authStatus === "checking") {
     return <CheckingPage />;
