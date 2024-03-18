@@ -20,10 +20,8 @@ export const TableProduct = (props) => {
   return (
     <>
       <tr onClick={handleOnClick}>
-        <th scope="row">{_id}</th>
         <td>{name}</td>
         <td>$ {price}</td>
-        <td>{sold}</td>
         <td>
           <Link
             to={`/${_id}`}

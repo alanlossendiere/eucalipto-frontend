@@ -107,6 +107,7 @@ export const FormProduct = () => {
     }
   }, [activeProduct, setValue]);
 
+  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="productLayout">
@@ -208,71 +209,44 @@ export const FormProduct = () => {
               </label>
             </div>
           </div>
-
-          <label htmlFor="floatingSizes">Talles:</label>
-          <div className="mb-3 form-check">
+          <div className="form-check">
             <input
-              type="checkbox"
-              value="S"
-              className="form-check-input"
-              id="sizeS"
-              {...register("sizes", { value: false })}
-            />
-            <label className="form-check-label" htmlFor="sizeS">
-              S
-            </label>
-          </div>
-          <div className="mb-3 form-check">
-            <input
-              type="checkbox"
-              value="M"
-              className="form-check-input"
-              id="sizeM"
-              {...register("sizes", { value: false })}
-            />
-            <label className="form-check-label" htmlFor="sizeM">
-              M
-            </label>
-          </div>
-          <div className="mb-3 form-check">
-            <input
-              type="checkbox"
-              value="L"
-              className="form-check-input"
-              id="sizeL"
-              {...register("sizes", { value: false })}
-            />
-            <label className="form-check-label" htmlFor="sizeL">
-              L
-            </label>
-          </div>
-          <div className="mb-3 form-check">
-            <input
-              type="checkbox"
+              type="radio"
               value="XL"
               className="form-check-input"
               id="sizeXL"
-              {...register("sizes", { value: false })}
+              {...register("sizes")}
+              checked={activeProduct && activeProduct.sizes === "XL"}
             />
             <label className="form-check-label" htmlFor="sizeXL">
               XL
             </label>
           </div>
-          <div class="form-floating">
-            <select
-              class="form-select"
-              id="floatingSelect"
-              aria-label="Floating label select example"
+          <div className="form-check">
+            <input
+              type="radio"
+              value="L"
+              className="form-check-input"
+              id="sizeL"
               {...register("sizes")}
-            >
-              <option disabled selected value={""}>
-                Open this select menu
-              </option>
-              <option value="XL">XL</option>
-              <option value="L">L</option>
-              <option value="S">S</option>
-            </select>
-            <label for="floatingSelect">Works with selects</label>
+              checked={activeProduct && activeProduct.sizes === "L"}
+            />
+            <label className="form-check-label" htmlFor="sizeL">
+              L
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              value="S"
+              className="form-check-input"
+              id="sizeS"
+              {...register("sizes")}
+              checked={activeProduct && activeProduct.sizes === "S"}
+            />
+            <label className="form-check-label" htmlFor="sizeS">
+              S
+            </label>
           </div>
           <div className="mb-3 product-image">
             <label className="form-label" htmlFor="uploadFiles">
