@@ -111,9 +111,6 @@ export const FormProduct = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="productLayout">
-        <div className="product-title">
-          <p className="product-title-input">{title}</p>
-        </div>
         <div className="basic-edit-product">
           <div className="form-floating mb-3">
             <input

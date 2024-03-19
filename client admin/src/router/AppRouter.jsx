@@ -8,10 +8,11 @@ import { NewProduct } from "../pages/NewProduct";
 import { useUserStore } from "../hooks/useUserStore";
 
 export const AppRouter = () => {
-
-  const { authStatus } = useUserStore()
+  const { authStatus } = useUserStore();
 
   console.log(authStatus);
+
+  // const authStatus = "authenticated"
 
   if (authStatus === "checking") {
     return <CheckingPage />;

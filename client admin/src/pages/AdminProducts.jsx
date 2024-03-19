@@ -1,15 +1,11 @@
 import { FabAddNewProduct } from "../components/FabAddNewProduct";
+import { NavBar } from "../components/NavBar";
 import { TableProducts } from "../components/TableProducts";
 
 export const AdminProducts = () => {
   return (
     <>
-      <div className="container text-center">
-        <div className="row">
-          <div className="col-6">Ganancia total...</div>
-          <div className="col-6">Gastos...</div>
-        </div>
-      </div>
+      <NavBar />
       <div className="container">
         <TableProducts />
       </div>

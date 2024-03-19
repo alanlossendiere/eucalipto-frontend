@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onChecking, onLogin } from "../store/adminSlice";
+import { onChecking, onLogin, onLogout } from "../store/adminSlice";
 import { adminApi } from "../api/adminApi";
 import { useNavigate } from "react-router";
 
@@ -29,6 +29,19 @@ export const useUserStore = () => {
     }
   };
 
+  const startLogout = async () => {
+    try {
+      const { data } = await adminApi.post("/admin/logout");
+
+      dispatch(onLogout(data));
+      console.log(data);
+      navigate("/login");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     // Propiedades
 
@@ -40,5 +53,6 @@ export const useUserStore = () => {
 
     startChecking,
     startLogin,
+    startLogout,
   };
 };

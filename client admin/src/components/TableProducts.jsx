@@ -16,7 +16,6 @@ export const TableProducts = () => {
       <table className="table table-striped" >
         <thead >
           <tr >
-            <th className="col">ID</th>
             <th className="col">Name</th>
             <th className="col">Price</th>
             <th className="col">Vendido</th>
