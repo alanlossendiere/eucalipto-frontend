@@ -107,7 +107,6 @@ export const FormProduct = () => {
     }
   }, [activeProduct, setValue]);
 
-  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="productLayout">
@@ -213,7 +212,7 @@ export const FormProduct = () => {
               className="form-check-input"
               id="sizeXL"
               {...register("sizes")}
-              checked={activeProduct && activeProduct.sizes === "XL"}
+              checked={activeProduct.sizes === "XL"}
             />
             <label className="form-check-label" htmlFor="sizeXL">
               XL
@@ -226,7 +225,7 @@ export const FormProduct = () => {
               className="form-check-input"
               id="sizeL"
               {...register("sizes")}
-              checked={activeProduct && activeProduct.sizes === "L"}
+              checked={activeProduct.sizes === "L"}
             />
             <label className="form-check-label" htmlFor="sizeL">
               L
@@ -239,7 +238,7 @@ export const FormProduct = () => {
               className="form-check-input"
               id="sizeS"
               {...register("sizes")}
-              checked={activeProduct && activeProduct.sizes === "S"}
+              checked={activeProduct.sizes === "S"}
             />
             <label className="form-check-label" htmlFor="sizeS">
               S

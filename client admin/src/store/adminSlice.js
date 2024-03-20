@@ -9,13 +9,13 @@ export const adminSlice = createSlice({
   },
   reducers: {
     onChecking: (state) => {
-      state.status = "checking";
+      state.authStatus = "checking";
     },
     onLogin: (state, { payload }) => {
       (state.authStatus = "authenticated"), (state.user = payload);
     },
     onLogout: (state, { payload }) => {
-      (state.status = "not-authenticated"),
+      (state.authStatus = "not-authenticated"),
         (state.user = {}),
         (state.message = payload);
     },

@@ -5,4 +5,5 @@ const { VITE_API_URL } = getEnvVariables();
 
 export const adminApi = axios.create({
   baseURL: VITE_API_URL,
+  withCredentials: true,
 });
