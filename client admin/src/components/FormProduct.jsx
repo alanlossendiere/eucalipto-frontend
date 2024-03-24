@@ -20,8 +20,6 @@ export const FormProduct = () => {
 
   const [imageUrls, setImageUrls] = useState([]);
 
-  const [title, setTitle] = useState("");
-
   const handleImageChange = async (event) => {
     event.preventDefault();
 
@@ -67,7 +65,6 @@ export const FormProduct = () => {
 
     setImageUrls(imageUrlsModified);
   };
-  console.log(imageUrls);
   const propertiesToSet = [
     "name",
     "_id",
@@ -86,8 +83,6 @@ export const FormProduct = () => {
   const onSubmit = async (data) => {
     data.image = imageUrls;
 
-    console.log(data);
-
     await startSavingProduct(data);
 
     navigate("/");
@@ -98,7 +93,6 @@ export const FormProduct = () => {
       propertiesToSet.forEach((property) => {
         setValue(property, activeProduct[property]);
       });
-      setTitle(activeProduct.name);
     }
     if (activeProduct.image) {
       const secureUrls = activeProduct.image.map((image) => image);
@@ -205,44 +199,26 @@ export const FormProduct = () => {
               </label>
             </div>
           </div>
-          <div className="form-check">
-            <input
-              type="radio"
-              value="XL"
-              className="form-check-input"
-              id="sizeXL"
-              {...register("sizes")}
-              checked={activeProduct.sizes === "XL"}
-            />
-            <label className="form-check-label" htmlFor="sizeXL">
-              XL
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              type="radio"
-              value="L"
-              className="form-check-input"
-              id="sizeL"
-              {...register("sizes")}
-              checked={activeProduct.sizes === "L"}
-            />
-            <label className="form-check-label" htmlFor="sizeL">
-              L
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              type="radio"
-              value="S"
-              className="form-check-input"
-              id="sizeS"
-              {...register("sizes")}
-              checked={activeProduct.sizes === "S"}
-            />
-            <label className="form-check-label" htmlFor="sizeS">
-              S
-            </label>
+
+          <div>
+            <div name="" id="" className="input-group mb-3">
+              <label htmlFor="inputGroupSelect01" className="input-group-text">
+                Talles
+              </label>
+              <select
+                id="inputGroupSelect01"
+                className="form-select"
+                {...register("sizes")}
+              >
+                <option value="" disabled>Seleccionar talle</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+              </select>
+            </div>
           </div>
           <div className="mb-3 product-image">
             <label className="form-label" htmlFor="uploadFiles">
@@ -276,8 +252,8 @@ export const FormProduct = () => {
               size={30}
             />
           </div>
-          <button type="submit">Enviar</button>
         </div>
+        <button type="submit">Enviar</button>
       </form>
     </>
   );

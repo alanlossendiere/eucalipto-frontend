@@ -16,10 +16,10 @@ export const TableProducts = () => {
       <table className="table table-striped" >
         <thead >
           <tr >
-            <th className="col">Name</th>
-            <th className="col">Price</th>
-            <th className="col">Vendido</th>
-            <th className="col">Acciones</th>
+            <th className="col table-title">Name</th>
+            <th className="col table-title">Price</th>
+            <th className="col table-title">Vendido</th>
+            <th className="col table-title">Acciones</th>
           </tr>
         </thead>
         <tbody>

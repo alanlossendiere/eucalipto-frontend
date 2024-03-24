@@ -22,7 +22,6 @@ export const useUserStore = () => {
 
       try {
         const res = await adminApi.get("/admin/verify", cookies.token);
-        console.log(res);
         if (!res.data) {
           dispatch(onLogout());
           dispatch(onChecking());

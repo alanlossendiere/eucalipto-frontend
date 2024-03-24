@@ -10,7 +10,6 @@ import { useUserStore } from "../hooks/useUserStore";
 export const AppRouter = () => {
   const { authStatus } = useUserStore();
 
-  console.log(authStatus);
 
   // const authStatus = "authenticated"
 
