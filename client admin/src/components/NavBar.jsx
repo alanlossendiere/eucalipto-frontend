@@ -13,8 +13,8 @@ export const NavBar = () => {
     <div className="header">
       <div className="nav">
         <div className="titleNav">Eucalipt DL</div>
-        <div className="logoutNav">
-          <IoIosLogOut onClick={logout} color="red" size={20} />
+        <div>
+          <IoIosLogOut onClick={logout} color="red" size={20} pointer/>
         </div>
       </div>
     </div>

@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminApi } from "../api/adminApi";
 import { MdOutlineUpload } from "react-icons/md";
-import { ImageForm } from "./ImageForm";
+import { FaArrowLeft } from "react-icons/fa";
+import { MdSend } from "react-icons/md";
 
 export const FormProduct = () => {
   const navigate = useNavigate();
@@ -103,6 +104,16 @@ export const FormProduct = () => {
 
   return (
     <>
+      <div className="header">
+        <div className="navForm d-flex align-items-center">
+          <FaArrowLeft
+            onClick={() => navigate(-1)}
+            className="logoutNav text-center pe-auto"
+            color="#ddd"
+          />
+          <div className="titleNav px-3">Eucalipto DL</div>
+        </div>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="productLayout">
         <div className="basic-edit-product">
           <div className="form-floating mb-3">
@@ -200,30 +211,48 @@ export const FormProduct = () => {
             </div>
           </div>
 
-          <div>
-            <div name="" id="" className="input-group mb-3">
-              <label htmlFor="inputGroupSelect01" className="input-group-text">
-                Talles
-              </label>
-              <select
-                id="inputGroupSelect01"
-                className="form-select"
-                {...register("sizes")}
-              >
-                <option value="" disabled>Seleccionar talle</option>
-                <option value="XS">XS</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
-              </select>
-            </div>
+          <div name="" id="" className="input-group mb-3">
+            <label htmlFor="inputGroupSelect01" className="input-group-text">
+              Talles
+            </label>
+            <select
+              id="inputGroupSelect01"
+              className="form-select"
+              {...register("sizes")}
+            >
+              <option value="" disabled>
+                Seleccionar talle
+              </option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
           </div>
           <div className="mb-3 product-image">
-            <label className="form-label" htmlFor="uploadFiles">
-              Imagenes
-            </label>
+            <div className="d-flex justify-content-end">
+              <div className="btn btn-outline-primary my-2">
+                <label className="form-label" htmlFor="uploadFiles">
+                  Imagenes
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="uploadFiles"
+                  onChange={handleImageChange}
+                  multiple
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                />
+                <MdOutlineUpload
+                  onClick={() => fileInputRef.current.click()}
+                  style={{ cursor: "pointer" }}
+                  size={30}
+                />
+              </div>
+            </div>
             <div className="image-input">
               {imageUrls.map((props) => (
                 <>
@@ -233,27 +262,17 @@ export const FormProduct = () => {
                   >
                     <span>X</span>
                   </div>
-                  <img className="card-img" src={props.secure_url}></img>
+                  <img className="card-img pb-2" src={props.secure_url}></img>
                 </>
               ))}
             </div>
-            <input
-              type="file"
-              className="form-control"
-              id="uploadFiles"
-              onChange={handleImageChange}
-              multiple
-              ref={fileInputRef}
-              style={{ display: "none" }}
-            />
-            <MdOutlineUpload
-              onClick={() => fileInputRef.current.click()}
-              style={{ cursor: "pointer" }}
-              size={30}
-            />
           </div>
         </div>
-        <button type="submit">Enviar</button>
+
+        <button type="submit" className="btn btn-primary">
+          Crear
+          <MdSend className="mx-2" />
+        </button>
       </form>
     </>
   );
