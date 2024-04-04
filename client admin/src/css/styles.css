@@ -7,6 +7,14 @@
   right: 25px;
 }
 
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+
 @media (max-width: 400px) {
 }
 
@@ -106,12 +114,15 @@
 @media (min-width: 800px) {
   .productLayout {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
   }
   .basic-edit-product {
-    top: 60px;
     padding: 20px;
-    width: 100%;
+    width: 50%;
   }
 
   .product-title {
@@ -142,7 +153,6 @@
   }
 
   .switch-group {
-    margin-top: -40px;
     justify-content: space-evenly;
     display: flex;
     width: 100%;
@@ -193,5 +203,9 @@
 
   .listComponent {
     text-align: center;
+  }
+
+  .form-check-label {
+    padding-left: 10px;
   }
 }

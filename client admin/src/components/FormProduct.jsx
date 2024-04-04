@@ -6,7 +6,9 @@ import { adminApi } from "../api/adminApi";
 import { MdOutlineUpload } from "react-icons/md";
 import { FaArrowLeft } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 export const FormProduct = () => {
   const navigate = useNavigate();
 
@@ -102,6 +104,16 @@ export const FormProduct = () => {
     }
   }, [activeProduct, setValue]);
 
+  const settings = {
+    dots: true,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+  };
+
   return (
     <>
       <div className="header">
@@ -195,7 +207,7 @@ export const FormProduct = () => {
                 id="floatingSold"
                 {...register("sold")}
               />
-              <label htmlFor="floatingSold">Sold</label>
+              <label htmlFor="floatingSold" className="form-check-label">Sold</label>
             </div>
             <div className="mb-3 form-switch">
               <input
@@ -206,7 +218,7 @@ export const FormProduct = () => {
                 {...register("active")}
               />
               <label className="form-check-label" htmlFor="floatingActive">
-                Activo:
+                Activo
               </label>
             </div>
           </div>
@@ -254,17 +266,29 @@ export const FormProduct = () => {
               </div>
             </div>
             <div className="image-input">
-              {imageUrls.map((props) => (
-                <>
-                  <div
+              <Slider {...settings} className="image-input">
+                {imageUrls.map((props) => (
+                  <img
+                    src={props.secure_url}
+                    key={props.public_id}
+                    className="h-100"
+                  />
+                ))}
+                {/* {imageUrls.map((props) => (
+                  <>
+                    <div>
+                      <img src={props.secure_url}></img>
+                    </div> */}
+                {/* <div
                     className="exitImage"
                     onClick={() => handleExitImage(props)}
-                  >
+                    >
                     <span>X</span>
-                  </div>
-                  <img className="card-img pb-2" src={props.secure_url}></img>
-                </>
-              ))}
+                    </div>
+                  <img className="card-img pb-2" src={props.secure_url}></img> */}
+                {/* </> */}
+                {/* // ))} */}
+              </Slider>
             </div>
           </div>
         </div>

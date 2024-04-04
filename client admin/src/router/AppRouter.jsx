@@ -11,7 +11,7 @@ export const AppRouter = () => {
   const { authStatus } = useUserStore();
 
 
-  // const authStatus = "authenticated"
+  // const authStatus = "checking"
 
   if (authStatus === "checking") {
     return <CheckingPage />;
