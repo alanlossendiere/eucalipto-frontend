@@ -197,7 +197,7 @@ export const FormProduct = () => {
                 {...register("outstanding")}
               />
               <label className="form-check-label" htmlFor="floatingOutstanding">
-                Destacado:
+                Destacado
               </label>
             </div>
             <div className=" mb-3 form-switch">

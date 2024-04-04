@@ -15,6 +15,10 @@
   padding: 10px;
 }
 
+.container {
+  margin-top: 40px;
+}
+
 @media (max-width: 400px) {
 }
 
@@ -22,6 +26,7 @@
   .productLayout {
     display: flex;
     flex-direction: column;
+    margin-top: 40px;
   }
   .basic-edit-product {
     top: 60px;
@@ -56,6 +61,10 @@
     display: inline-block;
   }
 
+  .form-check-label {
+    padding-left: 5px;
+  }
+
   .switch-group {
     margin-top: -40px;
     justify-content: space-evenly;
@@ -78,11 +87,12 @@
 
   .header {
     background-color: #111;
-    position: sticky;
+    width: 100%;
+    position: fixed;
     top: 0;
     font-size: 14px;
     z-index: 999;
-    line-height: 3;
+    line-height: 40px;
   }
 
   .nav {
