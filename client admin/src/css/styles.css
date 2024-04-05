@@ -98,7 +98,6 @@
   .nav {
     display: flex;
     justify-content: space-between;
-    max-width: 800px;
     margin: 0 auto;
     padding: 0 30px;
   }
@@ -119,9 +118,18 @@
   .listComponent {
     text-align: center;
   }
+
+  .login-form-1 {
+    width: 100%;
+  }
 }
 
 @media (min-width: 800px) {
+
+  .login-form-1 {
+    width: 50%;
+  }
+
   .productLayout {
     display: flex;
     flex-direction: row;

@@ -1,16 +1,13 @@
 import { useProductStore } from "../hooks/useProductsStore";
 
 export const ChooseSize = () => {
+  const { startFilteredProducts } = useProductStore();
 
-  const {
-    startFilteredProducts,
-  } = useProductStore();
-
-  const handleChange = ({target}) => {
+  const handleChange = ({ target }) => {
     startFilteredProducts(target.value);
   };
 
-  const talles = ["S", "M", "L", "XL"];
+  const talles = ["XS", "S", "M", "L", "XL", "XXL"];
 
   // const { selectedSize } = useSelector((state) => state.products);
 
@@ -24,7 +21,7 @@ export const ChooseSize = () => {
         role="group"
         aria-label="Basic radio toggle button group"
       >
-        <div className="my-2">
+        <div className="m-2">
           <input
             onChange={handleChange}
             className="btn-check"
@@ -38,7 +35,7 @@ export const ChooseSize = () => {
           </label>
         </div>
         {talles.map((talle) => (
-          <div className="my-2">
+          <div className="m-2">
             <input
               onChange={handleChange}
               className="btn-check"

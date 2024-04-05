@@ -31,6 +31,7 @@ export const useCartUiStore = () => {
 
   const startAddingProduct = async (data) => {
     try {
+      dispatch(onOpenCartUi());
       dispatch(onAddProduct(data));
     } catch (error) {
       console.log(error);
