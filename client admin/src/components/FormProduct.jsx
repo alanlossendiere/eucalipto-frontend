@@ -120,8 +120,9 @@ export const FormProduct = () => {
         <div className="navForm d-flex align-items-center">
           <FaArrowLeft
             onClick={() => navigate(-1)}
-            className="logoutNav text-center pe-auto"
+            className="logoutNav text-center"
             color="#ddd"
+            style={{ cursor: "pointer" }}
           />
           <div className="titleNav px-3">Eucalipto DL</div>
         </div>
@@ -207,7 +208,9 @@ export const FormProduct = () => {
                 id="floatingSold"
                 {...register("sold")}
               />
-              <label htmlFor="floatingSold" className="form-check-label">Sold</label>
+              <label htmlFor="floatingSold" className="form-check-label">
+                Sold
+              </label>
             </div>
             <div className="mb-3 form-switch">
               <input
@@ -269,9 +272,9 @@ export const FormProduct = () => {
               <Slider {...settings} className="image-input">
                 {imageUrls.map((props) => (
                   <img
+                    className="imageSlide"
                     src={props.secure_url}
                     key={props.public_id}
-                    className="h-100"
                   />
                 ))}
                 {/* {imageUrls.map((props) => (

@@ -53,11 +53,10 @@
   }
 
   .main {
-    margin: 50px auto auto;
-    margin-top: 80px;
+    margin: 20px auto auto;
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
+    max-width: 100vw;
   }
 
   .chooseSize {

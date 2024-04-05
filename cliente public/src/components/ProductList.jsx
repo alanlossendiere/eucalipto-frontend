@@ -1,5 +1,8 @@
 import React from "react";
 import { useCartUiStore } from "../hooks/useCartUiStore";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const ProductList = (data) => {
   const { startAddingProduct } = useCartUiStore();
@@ -21,14 +24,32 @@ export const ProductList = (data) => {
     await startAddingProduct(newData);
   };
 
+
+  const settings = {
+    arrows: false,
+    autoplaySpeed: 2000,
+    autoplay: true,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+  };
+
   return (
     <>
       <div className="card d-inline-block text-center">
-        <img
+        <Slider {...settings} className="cardImg">
+          {data.image.map((props) => (
+            <img src={props.secure_url} className="cardImg" />
+          ))}
+        </Slider>
+        {/* <img
           src={data.image[0].secure_url}
           alt={data.name}
           className="cardImg"
-        />
+        /> */}
         <div className="card-body">
           <div className="card-title">{data.name}</div>
           <div className="cardTextPrice">$ {data.price}</div>

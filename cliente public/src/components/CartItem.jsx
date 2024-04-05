@@ -12,6 +12,8 @@ export const CartItem = (product) => {
     startDeletingProduct(id);
   };
 
+  console.log(product)
+
   return (
     <div className="cartItem">
       <button
@@ -21,6 +23,7 @@ export const CartItem = (product) => {
       >
         <span>X</span>
       </button>
+    
       <img src={imgSrc} alt={name} className="cartImg" />
       <div className="cartDetails">
         <p className="cartTitle">{name}</p>

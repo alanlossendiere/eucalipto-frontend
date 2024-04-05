@@ -164,6 +164,7 @@
   .image-input {
     width: 100%;
     border-radius: 0px;
+    text-align: -webkit-center;
   }
 
   .form-switch {
@@ -225,5 +226,10 @@
 
   .form-check-label {
     padding-left: 10px;
+  }
+
+  .imageSlide {
+    width: auto !important;
+    max-height: 260px !important;
   }
 }
