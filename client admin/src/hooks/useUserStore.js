@@ -3,7 +3,6 @@ import { onChecking, onLogin, onLogout } from "../store/adminSlice";
 import { adminApi } from "../api/adminApi";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import Cookies from "js-cookie";
 
 export const useUserStore = () => {
   const dispatch = useDispatch();
@@ -13,15 +12,21 @@ export const useUserStore = () => {
 
   useEffect(() => {
     const checkLogin = async () => {
-      const cookies = Cookies.get();
+      const token = window.localStorage.token;
+      const local = windows.localStorage
 
-      if (!cookies.token) {
+      console.log(token)
+
+      if (!token) {
         dispatch(onLogout());
-        console.log("aca");
       }
 
       try {
-        const res = await adminApi.get("/admin/verify", cookies.token);
+        const res = await adminApi.get("/admin/verify", {
+          headers: {
+            token: token,
+          },
+        });
         if (!res.data) {
           dispatch(onLogout());
           dispatch(onChecking());
@@ -50,6 +55,7 @@ export const useUserStore = () => {
     try {
       dispatch(onChecking());
       const { data } = await adminApi.post("/admin/login", formLogin);
+      localStorage.setItem("token", data.token);
       dispatch(onLogin(data));
       navigate("/");
     } catch (error) {
@@ -60,7 +66,11 @@ export const useUserStore = () => {
   const startLogout = async () => {
     try {
       dispatch(onChecking());
-      await adminApi.post("/admin/logout");
+      const token = localStorage.getItem("token");
+      await adminApi.post("/admin/logout", {
+        token,
+      });
+      localStorage.removeItem("token");
       dispatch(onLogout());
       navigate("/login");
     } catch (error) {
