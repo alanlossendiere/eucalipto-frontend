@@ -13,9 +13,6 @@ export const useUserStore = () => {
   useEffect(() => {
     const checkLogin = async () => {
       const token = window.localStorage.token;
-      const local = windows.localStorage
-
-      console.log(token)
 
       if (!token) {
         dispatch(onLogout());
